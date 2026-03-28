@@ -1,0 +1,159 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def "World"
+{
+    def "Objects"
+    {
+        # ── Workbench 工作台（主操作台，高度 0.682m）─────────────────────
+        def Xform "workbench" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Workbench/M_Workbench.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── RotaryWorktable 旋转工作台（高度 0.404m，放置在旁边）─────────
+        def Xform "rotary_worktable" (
+            prepend payload = @/home/qkyjy/data/OurAssets/RotaryWorktable/M_RotaryWorktable.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, -1.0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 左侧：输入容器（workbench 台面 z≈0.682）─────────────────────
+        def Xform "input_bin" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StorageBox_Black/M_StorageBox_Black.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1.5, 1.5, 1.5)
+            double3 xformOp:translate = (-0.02, 0.25, 0.70)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 待分拣废弃物 ──────────────────────────────────────────────────
+
+        # PET：农夫山泉水瓶
+        def Xform "waste_pet_bottle_nongfu" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/WaterBottle_NongfuSpring/M_WaterBottle_NongfuSpring.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.05, 0.20, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PET：怡宝水瓶
+        def Xform "waste_pet_bottle_estbon" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/WaterBottle_estbon/M_WaterBottle_estbon.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.03, 0.22, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE：蓝色洗发水瓶
+        def Xform "waste_pe_shampoo" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/ShampooBottle500L_Blue/M_ShampooBottle500L_Blue.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.07, 0.28, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PP：PP 饭盒
+        def Xform "waste_pp_lunchbox" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/PPLunchBox _Black/M_PPLunchBox_Black.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.02, 0.30, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PVC：水管
+        def Xform "waste_pvc_pipe" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/PVCWaterPipe4/M_PVCWaterPipe4.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.04, 0.24, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # EPS：泡沫箱
+        def Xform "waste_eps_box" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StyrofoamBox1/M_StyrofoamBox1.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1.2, 1.2, 0.8)
+            double3 xformOp:translate = (-0.01, 0.20, 0.70)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 分拣容器 ──────────────────────────────────────────────────────
+
+        # PET bin → 蓝色
+        def Xform "bin_pet" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StorageBox_Blue/M_StorageBox_Blue.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.11, -0.08, 0.69)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE bin → 绿色
+        def Xform "bin_pe" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StorageBox_Green/M_StorageBox_Green.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.11, -0.30, 0.69)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PP bin → 红色
+        def Xform "bin_pp" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StorageBox_Red/M_StorageBox_Red.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.11, -0.08, 0.69)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PVC/EPS bin → 黄色
+        def Xform "bin_other" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StorageBox_Yellow/M_StorageBox_Yellow.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.11, -0.30, 0.69)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+}

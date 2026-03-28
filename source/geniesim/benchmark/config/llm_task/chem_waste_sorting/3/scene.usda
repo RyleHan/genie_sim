@@ -1,0 +1,113 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def "World"
+{
+    def "Objects"
+    {
+        # ── Workbench 工作台（主操作台，高度 0.682m）─────────────────────
+        def Xform "workbench" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Workbench/M_Workbench.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1.1)
+            double3 xformOp:translate = (0, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── RotaryWorktable 旋转工作台（高度 0.404m，放置在旁边）─────────
+        def Xform "rotary_worktable" (
+            prepend payload = @/home/qkyjy/data/OurAssets/RotaryWorktable/M_RotaryWorktable.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, -1.0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 左侧：输入容器（workbench 台面 z≈0.682）─────────────────────
+        
+
+        # ── 待分拣废弃物 ──────────────────────────────────────────────────
+
+        # PE：Yellow洗发水瓶
+        def Xform "waste_pe_shampoo_yellow" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/ShampooBottle500L_Yellow/M_ShampooBottle500L_Yellow.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.05, 0.20, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE：Green洗发水瓶
+        def Xform "waste_pe_shampoo_green" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/ShampooBottle500L_Green/M_ShampooBottle500L_Green.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.03, 0.22, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE：蓝色洗发水瓶
+        def Xform "waste_pe_shampoo_blue" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/ShampooBottle500L_Blue/M_ShampooBottle500L_Blue.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.07, 0.25, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PP：PP 饭盒
+        def Xform "waste_pp_lunchbox" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/PPLunchBox _Black/M_PPLunchBox_Black.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.02, 0.30, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PVC：水管
+        def Xform "waste_pvc_pipe" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/PVCWaterPipe4/M_PVCWaterPipe4.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.04, 0.24, 0.76)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # EPS：泡沫箱
+        def Xform "waste_eps_box" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Part/StyrofoamBox1/M_StyrofoamBox1.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1.2, 1.2, 0.2)
+            double3 xformOp:translate = (-0.01, 0.20, 0.70)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        
+
+        # ── 分拣容器 ──────────────────────────────────────────────────────
+
+        
+
+        
+    }
+}

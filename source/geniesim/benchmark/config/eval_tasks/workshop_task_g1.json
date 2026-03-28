@@ -1,0 +1,121 @@
+{
+  "objects": {
+    "constraints": null,
+    "extra_objects": [],
+    "fix_objects": [],
+    "task_related_objects": [
+      {
+        "object_id": "waste_pet_bottle_nongfu",
+        "data_info_dir": "parts/waste_pet_bottle_nongfu/",
+        "mass": 0.3,
+        "chinese_semantic_name": "农夫山泉水瓶",
+        "english_semantic_name": "NongFu Spring water bottle"
+      },
+      {
+        "object_id": "waste_pet_bottle_estbon",
+        "data_info_dir": "parts/waste_pet_bottle_estbon/",
+        "mass": 0.3,
+        "chinese_semantic_name": "怡宝水瓶",
+        "english_semantic_name": "Yi Bao water bottle"
+      },
+      {
+        "object_id": "waste_pe_shampoo",
+        "data_info_dir": "parts/waste_pe_shampoo/",
+        "mass": 0.5,
+        "chinese_semantic_name": "蓝色洗发水瓶",
+        "english_semantic_name": "blue shampoo bottle"
+      },
+      {
+        "object_id": "waste_pvc_pipe",
+        "data_info_dir": "parts/waste_pvc_pipe/",
+        "mass": 0.2,
+        "chinese_semantic_name": "PVC水管",
+        "english_semantic_name": "PVC water pipe"
+      },
+      {
+        "object_id": "waste_pp_lunchbox",
+        "data_info_dir": "parts/waste_pp_lunchbox/",
+        "mass": 0.15,
+        "chinese_semantic_name": "PP饭盒",
+        "english_semantic_name": "PP lunch box"
+      }
+    ]
+  },
+  "problem_instance": 0,
+  "recording_setting": {
+    "camera_list": [
+      "/G1/head_link2/Head_Camera",
+      "/G1/gripper_l_base_link/Left_Camera",
+      "/G1/gripper_r_base_link/Right_Camera"
+    ],
+    "fps": 30,
+    "num_of_episode": 6
+  },
+  "robot": {
+    "arm": "dual",
+    "robot_cfg": "G1_omnipicker.json",
+    "robot_id": "G1",
+    "robot_init_pose": {
+      "workspace_00": {
+        "position": [
+          -0.70,
+          0.2,
+          0.0
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "scene": {
+    "function_space_objects": {
+      "workspace_00": {
+        "material_obj_prim": {},
+        "position": [
+          0.0,
+          0.0,
+          0.682
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "size": [
+          0.8,
+          1.57,
+          0.2
+        ]
+      }
+    },
+    "scene_id": "workshop/workspace_00",
+    "scene_info_dir": "scenes/workshop",
+    "scene_usd": "scenes/workshop/workshop_00.usda"
+  },
+  "stages": [
+    {
+      "action": "pick",
+      "active": {
+        "object_id": "gripper",
+        "primitive": null
+      },
+      "extra_params": {
+        "arm": "auto",
+        "disable_upside_down": true,
+        "flip_grasp": true,
+        "grasp_offset": 0.0,
+        "pick_up_distance": 0.15
+      },
+      "passive": {
+        "object_id": "waste_pet_bottle_nongfu",
+        "primitive": null
+      }
+    }
+  ],
+  "task": "workshop_task_g1"
+}

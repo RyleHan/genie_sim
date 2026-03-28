@@ -1,0 +1,330 @@
+{
+    "layout": {
+        "table": {
+            "description": {
+                "semantic_name": [
+                    "table"
+                ],
+                "shape": "rectangular"
+            },
+            "keywords": [
+                "main_table",
+                "table",
+                "center"
+            ],
+            "usd": "table_000",
+            "xyz": [
+                0.0,
+                0.0,
+                0.365
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "input_bin": {
+            "description": {
+                "semantic_name": [
+                    "input bin",
+                    "unsorted waste container"
+                ],
+                "color": "large",
+                "shape": "box"
+            },
+            "keywords": [
+                "input_bin",
+                "unsorted",
+                "left side",
+                "mixed waste"
+            ],
+            "usd": "benchmark_storage_box_000",
+            "xyz": [
+                -0.02,
+                0.25,
+                0.915
+            ],
+            "xyzw": [
+                0,
+                0,
+                0.707107,
+                0.707107
+            ]
+        },
+        "waste_pet_bottle_1": {
+            "description": {
+                "semantic_name": [
+                    "PET bottle",
+                    "beverage bottle"
+                ],
+                "materials": [
+                    "PET"
+                ],
+                "color": "red"
+            },
+            "keywords": [
+                "PET",
+                "plastic bottle",
+                "recyclable",
+                "in input bin"
+            ],
+            "usd": "benchmark_beverage_bottle_004",
+            "xyz": [
+                -0.05,
+                0.22,
+                0.98
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "waste_pet_bottle_2": {
+            "description": {
+                "semantic_name": [
+                    "PET bottle",
+                    "coconut water bottle"
+                ],
+                "materials": [
+                    "PET"
+                ],
+                "color": "white"
+            },
+            "keywords": [
+                "PET",
+                "plastic bottle",
+                "coconut",
+                "in input bin"
+            ],
+            "usd": "benchmark_beverage_bottle_024",
+            "xyz": [
+                -0.02,
+                0.27,
+                1.00
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "waste_pe_bottle": {
+            "description": {
+                "semantic_name": [
+                    "PE bottle",
+                    "orange juice bottle"
+                ],
+                "materials": [
+                    "PE"
+                ],
+                "color": "orange"
+            },
+            "keywords": [
+                "PE",
+                "polyethylene",
+                "bottle",
+                "in input bin"
+            ],
+            "usd": "benchmark_beverage_bottle_008",
+            "xyz": [
+                -0.07,
+                0.26,
+                0.98
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "waste_pe_carton": {
+            "description": {
+                "semantic_name": [
+                    "PE milk carton",
+                    "milk box"
+                ],
+                "materials": [
+                    "PE"
+                ],
+                "color": "blue"
+            },
+            "keywords": [
+                "PE",
+                "milk carton",
+                "paper-plastic composite",
+                "in input bin"
+            ],
+            "usd": "benchmark_trash_000",
+            "xyz": [
+                -0.04,
+                0.30,
+                0.98
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "waste_pp_bottle": {
+            "description": {
+                "semantic_name": [
+                    "PP bottle",
+                    "Yakult bottle"
+                ],
+                "materials": [
+                    "PP"
+                ],
+                "color": "white"
+            },
+            "keywords": [
+                "PP",
+                "polypropylene",
+                "yakult",
+                "small bottle",
+                "in input bin"
+            ],
+            "usd": "benchmark_beverage_bottle_025",
+            "xyz": [
+                -0.08,
+                0.23,
+                0.98
+            ],
+            "xyzw": [
+                0,
+                0,
+                0,
+                1
+            ]
+        },
+        "bin_pp": {
+            "description": {
+                "semantic_name": [
+                    "PP bin",
+                    "polypropylene sorting box"
+                ],
+                "materials": [
+                    "plastic"
+                ],
+                "label": "PP"
+            },
+            "keywords": [
+                "PP",
+                "polypropylene",
+                "sorting bin",
+                "right side"
+            ],
+            "usd": "benchmark_storage_box_006",
+            "xyz": [
+                0.08,
+                -0.08,
+                0.908
+            ],
+            "xyzw": [
+                0,
+                0,
+                0.707107,
+                0.707107
+            ]
+        },
+        "bin_pe": {
+            "description": {
+                "semantic_name": [
+                    "PE bin",
+                    "polyethylene sorting box"
+                ],
+                "materials": [
+                    "plastic"
+                ],
+                "label": "PE"
+            },
+            "keywords": [
+                "PE",
+                "polyethylene",
+                "sorting bin",
+                "right side"
+            ],
+            "usd": "benchmark_storage_box_007",
+            "xyz": [
+                0.08,
+                -0.21,
+                0.908
+            ],
+            "xyzw": [
+                0,
+                0,
+                0.707107,
+                0.707107
+            ]
+        },
+        "bin_pet": {
+            "description": {
+                "semantic_name": [
+                    "PET bin",
+                    "polyethylene terephthalate sorting box"
+                ],
+                "materials": [
+                    "plastic"
+                ],
+                "label": "PET"
+            },
+            "keywords": [
+                "PET",
+                "polyethylene terephthalate",
+                "beverage bottle bin",
+                "right side"
+            ],
+            "usd": "benchmark_storage_box_008",
+            "xyz": [
+                -0.07,
+                -0.08,
+                0.908
+            ],
+            "xyzw": [
+                0,
+                0,
+                0.707107,
+                0.707107
+            ]
+        },
+        "bin_pu": {
+            "description": {
+                "semantic_name": [
+                    "PU bin",
+                    "polyurethane sorting box"
+                ],
+                "materials": [
+                    "plastic"
+                ],
+                "label": "PU"
+            },
+            "keywords": [
+                "PU",
+                "polyurethane",
+                "foam material bin",
+                "right side"
+            ],
+            "usd": "benchmark_storage_box_009",
+            "xyz": [
+                -0.07,
+                -0.21,
+                0.908
+            ],
+            "xyzw": [
+                0,
+                0,
+                0.707107,
+                0.707107
+            ]
+        }
+    },
+    "scene_id": "chem_waste_sorting",
+    "seed": 42
+}

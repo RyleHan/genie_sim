@@ -1,0 +1,73 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    # Ground plane for physics - robot won't fall through floor
+    def Plane "GroundPlane" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI"]
+    )
+    {
+        uniform token axis = "Z"
+        bool physics:collisionEnabled = 1
+        token visibility = "invisible"
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    # Explicit USD lights - required for real-time rendering mode used in data collection
+    # (Workshop.usd emissive mesh lights only work in path tracing, not real-time)
+    def DomeLight "AmbientDome"
+    {
+        float inputs:intensity = 500
+        color3f inputs:color = (1.0, 1.0, 1.0)
+        token visibility = "inherited"
+    }
+
+    def DistantLight "CeilingLight"
+    {
+        float inputs:angle = 70.0
+        float inputs:intensity = 50000
+        color3f inputs:color = (1.0, 0.97, 0.9)
+        float3 xformOp:rotateXYZ = (-80, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+    }
+
+    # Workshop room environment
+    def Xform "workshop_room" (
+        prepend payload = @/home/qkyjy/data/OurAssets/Workshop/Workshop.usd@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    # Main workbench - base at Z=0.138 so surface is at 0.138+0.682=0.820m
+    # Y=0.7: shifted +0.2m toward robot's left hand to avoid center fixture
+    def Xform "workbench" (
+        prepend payload = @/home/qkyjy/data/OurAssets/Workbench/M_Workbench.usd@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0.8, 0.138)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    # Rotary worktable alongside
+    def Xform "rotary_worktable" (
+        prepend payload = @/home/qkyjy/data/OurAssets/RotaryWorktable/M_RotaryWorktable.usd@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, -1.0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}

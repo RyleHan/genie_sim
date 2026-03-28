@@ -1,0 +1,141 @@
+{
+    "layout": {
+        "table": {
+            "description": {
+                "semantic_name": ["table"],
+                "shape": "rectangular"
+            },
+            "keywords": ["main_table", "table", "center"],
+            "usd": "table_000",
+            "xyz": [0.0, 0.0, 0.365],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "input_bin": {
+            "description": {
+                "semantic_name": ["input bin", "unsorted waste container"],
+                "color": "black",
+                "shape": "box"
+            },
+            "keywords": ["input_bin", "unsorted", "left side", "mixed waste"],
+            "usd": "M_StorageBox_Black",
+            "xyz": [-0.02, 0.25, 0.915],
+            "xyzw": [0, 0, 0.707107, 0.707107]
+        },
+        "waste_pet_bottle_nongfu": {
+            "description": {
+                "semantic_name": ["PET bottle", "Nongfu Spring water bottle"],
+                "materials": ["PET"],
+                "color": "transparent"
+            },
+            "keywords": ["PET", "plastic bottle", "water bottle", "Nongfu Spring", "recyclable", "in input bin"],
+            "usd": "M_WaterBottle_NongfuSpring",
+            "xyz": [-0.05, 0.20, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "waste_pet_bottle_estbon": {
+            "description": {
+                "semantic_name": ["PET bottle", "C'estbon water bottle"],
+                "materials": ["PET"],
+                "color": "blue"
+            },
+            "keywords": ["PET", "plastic bottle", "water bottle", "C'estbon", "recyclable", "in input bin"],
+            "usd": "M_WaterBottle_C_estbon",
+            "xyz": [0.03, 0.22, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "waste_pe_shampoo": {
+            "description": {
+                "semantic_name": ["PE bottle", "shampoo bottle"],
+                "materials": ["HDPE", "PE"],
+                "color": "blue"
+            },
+            "keywords": ["PE", "HDPE", "shampoo bottle", "polyethylene", "in input bin"],
+            "usd": "M_ShampooBottle500L_Blue",
+            "xyz": [-0.07, 0.28, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "waste_pp_lunchbox": {
+            "description": {
+                "semantic_name": ["PP lunch box", "takeaway container"],
+                "materials": ["PP"],
+                "color": "black"
+            },
+            "keywords": ["PP", "polypropylene", "lunch box", "food container", "in input bin"],
+            "usd": "M_PPLunchBox_Black",
+            "xyz": [0.02, 0.30, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "waste_pvc_pipe": {
+            "description": {
+                "semantic_name": ["PVC pipe", "water pipe"],
+                "materials": ["PVC"],
+                "color": "white"
+            },
+            "keywords": ["PVC", "polyvinyl chloride", "pipe", "in input bin"],
+            "usd": "M_PVCWaterPipe4",
+            "xyz": [-0.04, 0.24, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "waste_eps_box": {
+            "description": {
+                "semantic_name": ["EPS foam box", "styrofoam box"],
+                "materials": ["EPS"],
+                "color": "white"
+            },
+            "keywords": ["EPS", "expanded polystyrene", "styrofoam", "foam box", "in input bin"],
+            "usd": "M_StyrofoamBox1",
+            "xyz": [-0.01, 0.26, 0.98],
+            "xyzw": [0, 0, 0, 1]
+        },
+        "bin_pet": {
+            "description": {
+                "semantic_name": ["PET bin", "PET sorting box"],
+                "materials": ["plastic"],
+                "label": "PET",
+                "color": "blue"
+            },
+            "keywords": ["PET", "polyethylene terephthalate", "water bottle bin", "right side", "blue"],
+            "usd": "M_StorageBox_Blue",
+            "xyz": [0.11, -0.08, 0.908],
+            "xyzw": [0, 0, 0.707107, 0.707107]
+        },
+        "bin_pe": {
+            "description": {
+                "semantic_name": ["PE bin", "PE sorting box"],
+                "materials": ["plastic"],
+                "label": "PE",
+                "color": "green"
+            },
+            "keywords": ["PE", "polyethylene", "shampoo bottle bin", "right side", "green"],
+            "usd": "M_StorageBox_Green",
+            "xyz": [0.11, -0.30, 0.908],
+            "xyzw": [0, 0, 0.707107, 0.707107]
+        },
+        "bin_pp": {
+            "description": {
+                "semantic_name": ["PP bin", "PP sorting box"],
+                "materials": ["plastic"],
+                "label": "PP",
+                "color": "red"
+            },
+            "keywords": ["PP", "polypropylene", "lunch box bin", "right side", "red"],
+            "usd": "M_StorageBox_Red",
+            "xyz": [-0.11, -0.08, 0.908],
+            "xyzw": [0, 0, 0.707107, 0.707107]
+        },
+        "bin_other": {
+            "description": {
+                "semantic_name": ["other plastics bin", "PVC and EPS sorting box"],
+                "materials": ["plastic"],
+                "label": "OTHER",
+                "color": "yellow"
+            },
+            "keywords": ["PVC", "EPS", "other plastics", "pipe bin", "foam bin", "right side", "yellow"],
+            "usd": "M_StorageBox_Yellow",
+            "xyz": [-0.11, -0.30, 0.908],
+            "xyzw": [0, 0, 0.707107, 0.707107]
+        }
+    },
+    "scene_id": "chem_waste_sorting",
+    "seed": 1
+}

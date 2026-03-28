@@ -1,0 +1,15 @@
+{
+    "eval_type": "VLM",
+    "instructions": [
+        {
+            "instruction": "Sort all the trash on the table into the correct bins on the left. Put recyclable plastics in the left bin, and other waste in the right bin."
+        },
+        {
+            "instruction": "Please sort the garbage on the table. Plastic bottles and blocks go into the left box, other trash goes into the right box."
+        },
+        {
+            "instruction": "Clean up the table by placing each piece of waste into the appropriate sorting bin."
+        }
+    ],
+    "task_id": "chem_waste_sorting"
+}

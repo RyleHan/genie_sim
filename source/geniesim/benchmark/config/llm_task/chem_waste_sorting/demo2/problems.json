@@ -1,0 +1,23 @@
+{
+    "problem1": {
+        "Acts": [
+            {
+                "ActionList": [
+                    {
+                        "ActionSetWaitAny": [
+                            {
+                                "VLM": "chem_waste_sorting|Sort all the trash on the table into the correct bins"
+                            },
+                            {
+                                "StepOut": 900
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "Init": [],
+        "Objects": [],
+        "Problem": "chem_waste_sorting"
+    }
+}

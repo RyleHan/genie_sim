@@ -1,0 +1,76 @@
+{
+  "instruction_category": "pick_block_color_cn",
+  "instructions": [
+    {
+      "gripper": {
+        "1": {
+          "handover": false,
+          "side": "left"
+        }
+      },
+      "id": 1,
+      "instruction": "左手拿起桌上的红色积木",
+      "target": {
+        "id1": "benchmark_building_blocks_5f05491d"
+      },
+      "template_key": "pick_block_color"
+    },
+    {
+      "gripper": {
+        "1": {
+          "handover": false,
+          "side": "right"
+        }
+      },
+      "id": 2,
+      "instruction": "右手拿起桌上的黄色积木",
+      "target": {
+        "id1": "benchmark_building_blocks_452463d1"
+      },
+      "template_key": "pick_block_color"
+    },
+    {
+      "gripper": {
+        "1": {
+          "handover": false,
+          "side": "left"
+        }
+      },
+      "id": 3,
+      "instruction": "左手拿起桌上的蓝色积木",
+      "target": {
+        "id1": "benchmark_building_blocks_ac11d71f"
+      },
+      "template_key": "pick_block_color"
+    },
+    {
+      "gripper": {
+        "1": {
+          "handover": false,
+          "side": "right"
+        }
+      },
+      "id": 4,
+      "instruction": "右手拿起桌上的绿色积木",
+      "target": {
+        "id1": "benchmark_building_blocks_c44b22d5"
+      },
+      "template_key": "pick_block_color"
+    },
+    {
+      "gripper": {
+        "1": {
+          "handover": false,
+          "side": "left"
+        }
+      },
+      "id": 5,
+      "instruction": "左手拿起桌上的紫色积木",
+      "target": {
+        "id1": "benchmark_building_blocks_434f2d0a"
+      },
+      "template_key": "pick_block_color"
+    }
+  ],
+  "scene_id": "table_scene"
+}

@@ -1,0 +1,15 @@
+{
+    "eval_type": "VLM",
+    "instructions": [
+        {
+            "instruction": "Sort all the plastic waste on the table into the correct bins. Put PET bottles (water bottles) in the blue bin, PE bottles (shampoo bottles) in the green bin, PP lunch boxes in the red bin, and PVC pipes or foam boxes in the yellow bin."
+        },
+        {
+            "instruction": "Please sort the chemical waste plastics by material type: PET water bottles go to the blue box, PE shampoo bottles go to the green box, PP containers go to the red box, and other plastics (PVC, EPS) go to the yellow box."
+        },
+        {
+            "instruction": "Clean up the table by placing each piece of plastic waste into the appropriate color-coded sorting bin according to its material type."
+        }
+    ],
+    "task_id": "chem_waste_sorting"
+}

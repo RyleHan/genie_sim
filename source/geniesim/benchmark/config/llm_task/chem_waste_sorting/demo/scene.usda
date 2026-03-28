@@ -1,0 +1,147 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def "World"
+{
+    def "Objects"
+    {
+        # ── 桌子 ──────────────────────────────────────────────────────────
+        def Xform "table" (
+            prepend payload = @../../../../../assets/objects/edited/table_000/Aligned.usda@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (2, 2, 1)
+            double3 xformOp:translate = (0, 0, 0.365)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 左侧：输入容器（黑色收纳盒，堆放待分拣垃圾）──────────────────
+        def Xform "input_bin" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StorageBox_Black.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1.2, 1.2, 1.2)
+            double3 xformOp:translate = (-0.02, 0.25, 0.915)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 待分拣垃圾（PET / PE / PP / PVC / EPS）────────────────────────
+
+        # PET 材质：农夫山泉水瓶
+        def Xform "waste_pet_bottle_nongfu" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_WaterBottle_NongfuSpring.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.05, 0.20, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PET 材质：怡宝水瓶
+        def Xform "waste_pet_bottle_estbon" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_WaterBottle_C_estbon.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.03, 0.22, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE 材质：蓝色洗发水瓶（HDPE）
+        def Xform "waste_pe_shampoo" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_ShampooBottle500L_Blue.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.07, 0.28, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PP 材质：PP 饭盒（黑色）
+        def Xform "waste_pp_lunchbox" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_PPLunchBox_Black.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.02, 0.30, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PVC 材质：PVC 水管
+        def Xform "waste_pvc_pipe" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_PVCWaterPipe4.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.04, 0.24, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # EPS 材质：泡沫箱
+        def Xform "waste_eps_box" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StyrofoamBox1.usd@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.01, 0.26, 0.98)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 右侧：4 个分拣容器（2×2 布局，彩色便于区分）────────────────
+        # PET 聚对苯二甲酸乙二醇酯 → 蓝色箱
+        def Xform "bin_pet" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StorageBox_Blue.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.11, -0.08, 0.908)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PE 聚乙烯 → 绿色箱
+        def Xform "bin_pe" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StorageBox_Green.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.11, -0.30, 0.908)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PP 聚丙烯 → 红色箱
+        def Xform "bin_pp" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StorageBox_Red.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.11, -0.08, 0.908)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # PVC/其他 → 黄色箱
+        def Xform "bin_other" (
+            prepend payload = @/home/qkyjy/data/OurAssets/Collected_Part/Meshes/M_StorageBox_Yellow.usd@
+        )
+        {
+            quatf xformOp:orient = (0.707107, 0, 0, 0.707107)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.11, -0.30, 0.908)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+}
