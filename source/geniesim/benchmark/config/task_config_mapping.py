@@ -10,6 +10,10 @@ TASK_MAPPING = {
         "background": {"G1": "table_task_g1", "G2": "table_task_g2"},
         "eval_dims": {"manip": "pick", "cognition": "color"},
     },
+    "pick_block_color_cn": {
+        "background": {"G1": "table_task_g1", "G2": "table_task_g2"},
+        "eval_dims": {"manip": "pick", "cognition": "color"},
+    },
     "pick_block_shape": {
         "background": {"G1": "table_task_g1", "G2": "table_task_g2"},
         "eval_dims": {"manip": "pick", "cognition": "shape"},
@@ -105,6 +109,10 @@ TASK_MAPPING = {
     "clean_the_desktop": {
         "background": {"G2": "study_room_05_g2"},
         "eval_dims": "long-horizon",
+    },
+    "chem_waste_sorting": {
+        "background": {"G1": "workshop_task_g1"},
+        "eval_dims": {"manip": "planar_pick_place_", "cognition": "semantic"},
     },
     "sort_fruit": {
         "background": {"G1": "table_task_g1", "G2": "table_task_g2"},

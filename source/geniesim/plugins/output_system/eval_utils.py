@@ -48,6 +48,7 @@ TASK_STEPS = {
     "open_door": ["VLM"],
     "pick_billards_color": ["Follow", "PickUpOnGripper"],
     "pick_block_color": ["Follow", "PickUpOnGripper"],
+    "pick_block_color_cn": ["Follow", "PickUpOnGripper"],
     "pick_block_number": ["Follow", "PickUpOnGripper"],
     "pick_block_shape": ["Follow", "PickUpOnGripper"],
     "pick_block_size": ["Follow", "PickUpOnGripper"],
@@ -335,4 +336,4 @@ class EvaluationSummary:
             general_results = {}
             general_results["details"] = self.results
             general_results["statistics"] = get_statistics(self.results, self.sub_steps)
-            json.dump(general_results, f, indent=4)
+            json.dump(general_results, f, indent=4, ensure_ascii=False)

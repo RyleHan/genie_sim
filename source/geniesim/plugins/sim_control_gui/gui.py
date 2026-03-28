@@ -5,9 +5,14 @@
 import tkinter as tk
 from tkinter import ttk
 import threading
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String, Bool
+try:
+    import rclpy
+    from rclpy.node import Node
+    from std_msgs.msg import String, Bool
+except (ModuleNotFoundError, ImportError):
+    rclpy = None
+    Node = object
+    String = Bool = None
 
 
 class SimControlGUINode(Node):

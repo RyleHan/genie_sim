@@ -3,7 +3,10 @@
 # License: Mozilla Public License Version 2.0
 
 from .base_nodes import *
-from std_msgs.msg import String, Header, Bool
+try:
+    from std_msgs.msg import String, Header, Bool
+except (ModuleNotFoundError, ImportError):
+    String = Header = Bool = None
 import cv2
 from scipy.spatial.transform import Rotation as R
 import os

@@ -11,14 +11,20 @@ import omni.replicator.core as rep
 
 import numpy as np
 
-from cv_bridge import CvBridge
+try:
+    from cv_bridge import CvBridge
+    from rclpy.node import Node
+    from std_msgs.msg import Header
+    from sensor_msgs.msg import JointState, Image
+    from geometry_msgs.msg import TransformStamped, Point, Vector3, Quaternion
+    from tf2_ros import TransformBroadcaster, StaticTransformBroadcaster
+except (ModuleNotFoundError, ImportError):
+    CvBridge = None
+    Node = object
+    Header = JointState = Image = None
+    TransformStamped = Point = Vector3 = Quaternion = None
+    TransformBroadcaster = StaticTransformBroadcaster = None
 from pxr import Gf, Sdf, UsdPhysics
-
-from rclpy.node import Node
-from std_msgs.msg import Header
-from sensor_msgs.msg import JointState, Image
-from geometry_msgs.msg import TransformStamped, Point, Vector3, Quaternion
-from tf2_ros import TransformBroadcaster, StaticTransformBroadcaster
 
 
 MAP_DYNAMIC_TF_NAMES = {
@@ -74,19 +80,26 @@ MAP_DYNAMIC_TF_NAMES = {
 class RobotInterface(Node):
 
     def __init__(self):
-        super().__init__("geniesim_sensor_node")
+        self._ros_available = Node is not object
+        if self._ros_available:
+            super().__init__("geniesim_sensor_node")
+            self._header = Header(frame_id="base_link")
+            self._bridge = CvBridge()
+            self._js_msg = JointState()
+            self._js_msg.name = []
+            self._js_msg.position = []
+            self._js_msg.velocity = []
+            self._js_msg.effort = []
+        else:
+            self._header = None
+            self._bridge = None
+            self._js_msg = None
 
         self._sec = 0
         self._nanosec = 0
-        self._header = Header(frame_id="base_link")
-
         self._articulation = None
-
-        self._bridge = CvBridge()
-
         self._static_tf_tree = None
         self._dynamic_tf_tree = None
-
         self._enable_ros_pub = True
 
         # cache
@@ -96,13 +109,6 @@ class RobotInterface(Node):
 
         self.articulated_obj_publishers = []
         self.articulated_objs = []
-
-        # JointState for the main robot
-        self._js_msg = JointState()
-        self._js_msg.name = []  # will be filled once when we know the robot DOFs
-        self._js_msg.position = []
-        self._js_msg.velocity = []
-        self._js_msg.effort = []
 
         # One JointState per articulated object
         self._joint_state_cache = {}  # articulation -> JointState
@@ -130,32 +136,34 @@ class RobotInterface(Node):
         self._articulation_vel = self._articulation.get_joint_velocities()
         self._articulation_eff = self._articulation.get_measured_joint_efforts()
 
-        self.pub_js = self.create_publisher(JointState, "/joint_states", 1)
-        self.pub_ee = self.create_publisher(JointState, "/joint_states_ee", 1)
-
-        self._js_msg.name = articulation.dof_names
-        N = len(self._js_msg.name)
-        # contiguous numpy buffers; .tolist() is still cheap
+        N = len(articulation.dof_names)
         self._dof_pos_cache = np.empty(N, dtype=np.float64)
         self._dof_vel_cache = np.empty(N, dtype=np.float64)
         self._dof_eff_cache = np.empty(N, dtype=np.float64)
-        # pre-size the lists to avoid list-resize inside the loop
-        self._js_msg.position = [0.0] * N
-        self._js_msg.velocity = [0.0] * N
-        self._js_msg.effort = [0.0] * N
 
         self._metadata = articulation._articulation_view._metadata
         self.joint_names_ee = ["idx51_ee_l_joint", "idx91_ee_r_joint"]
         self.joint_indices_ee = 1 + np.array([self._metadata.joint_indices[jn] for jn in self.joint_names_ee])
 
+        if self._ros_available:
+            self.pub_js = self.create_publisher(JointState, "/joint_states", 1)
+            self.pub_ee = self.create_publisher(JointState, "/joint_states_ee", 1)
+            self._js_msg.name = articulation.dof_names
+            self._js_msg.position = [0.0] * N
+            self._js_msg.velocity = [0.0] * N
+            self._js_msg.effort = [0.0] * N
+
     def register_articulated_obj(self, articulated_objs):
         for prim_path, articulation in articulated_objs.items():
             self.articulated_objs.append(articulation)
-            self.articulated_obj_publishers.append(
-                self.create_publisher(JointState, f"/articulated/{prim_path.split('/')[-1]}", 1)
-            )
+            if self._ros_available:
+                self.articulated_obj_publishers.append(
+                    self.create_publisher(JointState, f"/articulated/{prim_path.split('/')[-1]}", 1)
+                )
 
     def register_robot_tf(self, stage, robot_ns):
+        if not self._ros_available:
+            return
         robot_ns = robot_ns.replace("/", "")
         if not self._articulation:
             logger.error("register_robot_tf failed before articulation is intialized")
@@ -182,10 +190,10 @@ class RobotInterface(Node):
         self._static_tfs_prebuilt = _build_tf_list(self._static_tf_tree)
         self._dynamic_tfs_prebuilt = _build_tf_list(self._dynamic_tf_tree)
 
-        self.static_broadcaster = StaticTransformBroadcaster(self)
-        self.dynamic_broadcaster = TransformBroadcaster(self)
-        # self.publish_transforms(self._static_tf_tree, self.static_broadcaster)
-        self.static_broadcaster.sendTransform(self._static_tfs_prebuilt)
+        if self._ros_available:
+            self.static_broadcaster = StaticTransformBroadcaster(self)
+            self.dynamic_broadcaster = TransformBroadcaster(self)
+            self.static_broadcaster.sendTransform(self._static_tfs_prebuilt)
 
     def register_obj_tf(self, object_prim):
         self._dynamic_tf_tree.append((object_prim, None))
@@ -247,7 +255,8 @@ class RobotInterface(Node):
             self.parameters[camera_id] = camera_param
 
             # pub
-            self.publisher_map[camera_id] = self.create_publisher(Image, camera_param["topic_name"]["rgb"], 1)
+            if self._ros_available:
+                self.publisher_map[camera_id] = self.create_publisher(Image, camera_param["topic_name"]["rgb"], 1)
 
         except Exception as e:
             logger.warning(f"Failed to register camera {camera_prim}: {e}")
@@ -256,16 +265,19 @@ class RobotInterface(Node):
         self.annotators[camera_id] = rep.AnnotatorRegistry.get_annotator("rgb")
         self.annotators[camera_id].attach(rp)
 
-        img = Image()
-        img.header.frame_id = "camera_optical_frame"
-        img.width = resolution[0]
-        img.height = resolution[1]
-        img.encoding = "rgba8"
-        img.step = resolution[0] * 4
-        self._img_msg_cache[camera_id] = img
+        if self._ros_available:
+            img = Image()
+            img.header.frame_id = "camera_optical_frame"
+            img.width = resolution[0]
+            img.height = resolution[1]
+            img.encoding = "rgba8"
+            img.step = resolution[0] * 4
+            self._img_msg_cache[camera_id] = img
         self._img_data_cache[camera_id] = np.empty((resolution[1], resolution[0], 4), dtype=np.uint8)
 
     def tick(self, current_time: float, current_step_index: int):
+        if not self._ros_available:
+            return
         # on_tick
         self._current_step_index = current_step_index
         self._sec = int(current_time)

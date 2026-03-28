@@ -70,4 +70,6 @@ class RobotCfg(Robot):
         self.opened_positions = robot_cfg["gripper"]["opened_positions"]
         self.closed_velocities = robot_cfg["gripper"]["closed_velocities"]
         self.action_deltas = np.array([-0.1, -0.1])
+        curobo_cfg = robot_cfg.get("curobo", {})
+        self.curobo_config_file = curobo_cfg.get("curobo_config_file", None)
         self.perception = robot_cfg["perception"] if "perception" in robot_cfg else None

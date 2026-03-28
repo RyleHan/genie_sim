@@ -440,10 +440,10 @@ robot_cfg:
       }
     lock_joints:
       {
-        "idx01_body_joint1": 0.3,
-        "idx02_body_joint2": 0.52359877,
+        "idx01_body_joint1": 0.42,
+        "idx02_body_joint2": 0.8727,
         "idx11_head_joint1": 0.0,
-        "idx12_head_joint2": 0.0,
+        "idx12_head_joint2": 0.4363,
         "idx72_gripper_r_inner_joint3": 0.0,
         "idx73_gripper_r_inner_joint4": 0.349,
         "idx81_gripper_r_outer_joint1": 0.95,
@@ -494,15 +494,15 @@ robot_cfg:
         ]
       retract_config:
         [
-          0.3,
-          0.52359877,
-          -2.07,
-          0.61,
-          1.57,
-          -1,
-          1.57,
-          1.57,
-          -1.57,
+          0.42,
+          0.8727,
+          1.0734,
+          -0.6109,
+          -0.2793,
+          1.2846,
+          -0.7313,
+          -1.4957,
+          0.1868,
           0.0,
           0.01,
           0.5,

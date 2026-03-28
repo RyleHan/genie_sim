@@ -83,7 +83,7 @@
     }
   },
   "robot": {
-    "arm": "right",
+    "arm": "dual",
     "base_prim_path": "/G1",
     "dof_nums": 7,
     "init_joint_position": [
@@ -125,7 +125,10 @@
     "initial_position": [],
     "joint_delta_time": 0.01,
     "lock_joints": [],
-    "robot_description": "/G1_omnipicker/G1_omnipicker.yml",
+    "robot_description": {
+      "right": "/G1_omnipicker/G1_omnipicker.yml",
+      "left": "/G1_omnipicker/G1_omnipicker_left.yaml"
+    },
     "robot_name": "G1_omnipicker",
     "robot_usd": "robot/G1_omnipicker/robot.usda",
     "urdf_name": "/G1_omnipicker/G1_omnipicker.urdf"

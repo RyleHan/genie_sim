@@ -50,10 +50,7 @@ from isaacsim import SimulationApp
 simulation_app = SimulationApp(
     {
         "headless": args.headless,
-        "renderer": "RealTimePathTracing",
-        "extra_args": [
-            "--/persistent/rtx/modes/rt2/enabled=true",
-        ],
+        "renderer": "RaytracedLighting",
     }
 )
 simulation_app._carb_settings.set("/physics/cooking/ujitsoCollisionCooking", False)
@@ -62,7 +59,8 @@ simulation_app._carb_settings.set("/app/asyncRendering", False)
 from isaacsim.core.api import World
 from isaacsim.core.utils import extensions
 
-extensions.enable_extension("isaacsim.ros2.bridge")
+if args.publish_ros:
+    extensions.enable_extension("isaacsim.ros2.bridge")
 import omni
 
 from server.command_controller import CommandController
@@ -107,6 +105,7 @@ while simulation_app.is_running():
             last_render_time = current_time
         if need_render:
             ui_builder.my_world.render()
+            simulation_app.update()
     if rpc_server:
         rpc_server.server_function.on_physics_step()
         if rpc_server.server_function.exit:

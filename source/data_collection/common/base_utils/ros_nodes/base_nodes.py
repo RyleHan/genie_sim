@@ -6,12 +6,21 @@ import os
 import sys
 import threading
 
-from cv_bridge import CvBridge
-from rclpy.node import Node
-from rclpy.parameter import Parameter
-from rclpy.qos import QoSDurabilityPolicy, QoSHistoryPolicy, QoSProfile, QoSReliabilityPolicy
-from sensor_msgs.msg import JointState
-from tf2_msgs.msg import TFMessage
+try:
+    from cv_bridge import CvBridge
+    from rclpy.node import Node
+    from rclpy.parameter import Parameter
+    from rclpy.qos import QoSDurabilityPolicy, QoSHistoryPolicy, QoSProfile, QoSReliabilityPolicy
+    from sensor_msgs.msg import JointState
+    from tf2_msgs.msg import TFMessage
+    _ROS_AVAILABLE = True
+except (ImportError, ModuleNotFoundError):
+    CvBridge = None
+    Node = object
+    Parameter = None
+    QoSDurabilityPolicy = QoSHistoryPolicy = QoSProfile = QoSReliabilityPolicy = None
+    JointState = TFMessage = None
+    _ROS_AVAILABLE = False
 
 from common.base_utils.logger import logger
 
@@ -26,19 +35,22 @@ from common.base_utils.name_utils import (
     OMNIPICKER_AJ_NAMES,
 )
 
-QOS_PROFILE_LATEST = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=30,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
-)
-
-QOS_PROFILE_VOLATILE = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=30,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.VOLATILE,
-)
+if _ROS_AVAILABLE:
+    QOS_PROFILE_LATEST = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=30,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
+    )
+    QOS_PROFILE_VOLATILE = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=30,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.VOLATILE,
+    )
+else:
+    QOS_PROFILE_LATEST = None
+    QOS_PROFILE_VOLATILE = None
 
 
 class SimNode(Node):

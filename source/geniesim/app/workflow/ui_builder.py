@@ -50,6 +50,7 @@ class UIBuilder:
         self.cameras = robot.cameras
         self.init_joint_position = robot.init_joint_position
         self.end_effector_prim_path = robot.end_effector_prim_path
+        self.curobo_config_file = getattr(robot, "curobo_config_file", None)
         self.initialize_articulation(batch_num)
         self.arm_type = robot.arm_type
         self.end_effector_name = robot.end_effector_name
@@ -253,7 +254,7 @@ class UIBuilder:
                 self._get_ee_pose
 
     def _init_curobo(self):
-        if self.articulation:
+        if self.articulation and self.curobo_config_file:
             from geniesim.app.utils.motion_gen_reacher import CuroboMotion
 
             self.curoboMotion = CuroboMotion(

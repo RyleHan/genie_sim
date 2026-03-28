@@ -114,12 +114,14 @@ class CuroboMotion:
         self.motion_gen.warmup(parallel_finetune=True)
         self.world_model = self.motion_gen.world_collision
         self.plan_config = MotionGenPlanConfig(
-            enable_graph=False,
-            enable_graph_attempt=4,
-            max_attempts=10,
+            enable_graph=True,           # 开启 RRT* 图搜索，提升成功率
+            enable_graph_attempt=5,
+            max_attempts=40,             # 与 data_collection 版本对齐
             enable_finetune_trajopt=True,
             parallel_finetune=True,
             time_dilation_factor=0.6,
+            ik_fail_return=5,
+            success_ratio=0.5,
         )
         self.target = SingleXFormPrim(
             "/World/target",
@@ -135,7 +137,8 @@ class CuroboMotion:
         self.robot = robot
         self.robot._articulation_view.initialize()
         self.idx_list = [self.robot.get_dof_index(x) for x in j_names]
-        self.robot.set_joint_positions(default_config, self.idx_list)
+        # 不在初始化时强制移到 retract，避免懒初始化时干扰手臂当前位置
+        # self.robot.set_joint_positions(default_config, self.idx_list)
         self.robot._articulation_view.set_max_efforts(
             values=np.array([5000 for i in range(len(self.idx_list))]),
             joint_indices=self.idx_list,
@@ -430,7 +433,8 @@ class CuroboMotion:
         else:
             self.reached = True
             self.success = False
-            carb.log_warn("plan did not converge to a solution")
+            self.last_result_status = result.status  # expose for external diagnostics
+            carb.log_warn(f"plan did not converge to a solution  status={result.status}")
         self.target_pose = cube_position
         self.target_orientation = cube_orientation
         self.past_pose = cube_position

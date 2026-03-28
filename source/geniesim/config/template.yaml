@@ -13,6 +13,7 @@ app:
   enable_gpu_dynamics: false
   enable_rate_limit: true
   enable_playback: false
+  enable_embodied_http: false
 benchmark:
   client_host: "localhost:50051"
   num_episode: 1

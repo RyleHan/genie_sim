@@ -2,8 +2,12 @@
 # Author: Genie Sim Team
 # License: Mozilla Public License Version 2.0
 
-from rclpy.constants import S_TO_NS
-from rosgraph_msgs.msg import Clock
+try:
+    from rclpy.constants import S_TO_NS
+    from rosgraph_msgs.msg import Clock
+except (ModuleNotFoundError, ImportError):
+    S_TO_NS = 1_000_000_000
+    Clock = None
 
 from .base_nodes import *
 

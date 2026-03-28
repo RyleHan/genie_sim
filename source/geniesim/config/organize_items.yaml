@@ -15,14 +15,15 @@ app:
   enable_playback: false
 benchmark:
   client_host: "localhost:50051"
+  terminal_interactive: false
   num_episode: 1
   task_name: "table_task_g1"
   sub_task_name: "place_object_into_box_color"
   output_dir: "output"
   fps: 30
   record: false
-  infer_host: "localhost"
-  infer_port: 8999
+  infer_host: "192.168.110.30"
+  infer_port: 8000
   model_arc: "pi"
   enable_ros: false
   interactive: false

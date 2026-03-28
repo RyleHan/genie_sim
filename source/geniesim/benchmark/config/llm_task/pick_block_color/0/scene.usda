@@ -68,5 +68,29 @@ def "World"
             double3 xformOp:translate = (0.055, -0.174, 0.885)
             uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
         }
+
+        # ── 分类盘：左上角（机器人视角：远端、左侧）────────────────────────
+        # 位置 (0.18, +0.32)：距最近cube（黄色Y=+0.152）间距 6cm，在桌面范围内
+        def Xform "sort_tray_left" (
+            prepend payload = @../../../../../assets/objects/benchmark/storage_box/benchmark_storage_box_000/Aligned.usda@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.7, 0.7, 0.7)
+            double3 xformOp:translate = (0.18, 0.32, 0.885)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        # ── 分类盘：右上角（机器人视角：远端、右侧）────────────────────────
+        # 位置 (0.18, -0.35)：距最近cube（蓝色Y=-0.186）间距 5cm，在桌面范围内
+        def Xform "sort_tray_right" (
+            prepend payload = @../../../../../assets/objects/benchmark/storage_box/benchmark_storage_box_001/Aligned.usda@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (0.7, 0.7, 0.7)
+            double3 xformOp:translate = (0.18, -0.35, 0.885)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
     }
 }

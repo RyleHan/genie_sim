@@ -2,11 +2,16 @@
 # Author: Genie Sim Team
 # License: Mozilla Public License Version 2.0
 
-from geometry_msgs.msg import TransformStamped
-from rclpy.constants import S_TO_NS
-from rosgraph_msgs.msg import Clock
-from sensor_msgs.msg import JointState
-from tf2_msgs.msg import TFMessage
+try:
+    from geometry_msgs.msg import TransformStamped
+    from rclpy.constants import S_TO_NS
+    from rosgraph_msgs.msg import Clock
+    from sensor_msgs.msg import JointState
+    from tf2_msgs.msg import TFMessage
+except (ImportError, ModuleNotFoundError):
+    TransformStamped = None
+    S_TO_NS = 1_000_000_000
+    Clock = TFMessage = JointState = None
 
 from common.base_utils.ros_nodes.base_nodes import Node, Parameter
 

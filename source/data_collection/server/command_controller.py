@@ -13,7 +13,10 @@ import numpy as np
 import omni
 import omni.replicator.core as rep
 import omni.timeline
-import rclpy
+try:
+    import rclpy
+except (ImportError, ModuleNotFoundError):
+    rclpy = None
 import yaml
 from isaacsim.core.api.materials import OmniGlass, OmniPBR, PhysicsMaterial
 from isaacsim.core.api.objects import cuboid, cylinder
@@ -30,7 +33,10 @@ from omni.physx.scripts import utils
 from pxr import Gf, PhysxSchema, Sdf, Usd, UsdGeom, UsdPhysics, UsdShade
 
 from common.base_utils.logger import logger
-from common.base_utils.ros_nodes.server_node import ServerNode
+try:
+    from common.base_utils.ros_nodes.server_node import ServerNode
+except (ImportError, ModuleNotFoundError):
+    ServerNode = None
 from common.base_utils.transform_utils import mat2quat_wxyz, quat2mat_wxyz
 from common.data_filter.runtime_checker import CheckerStatus, create_checker
 from server.command_enum import Command, command_value_to_string
@@ -90,6 +96,7 @@ class CommandController:
         self.usd_objects = {}
         self.articulat_objects = {}
         self.rigid_bodies = {}
+        self.materials = {}
         self.enable_physics = enable_physics
         self.enable_curobo = enable_curobo
         self.trajectory_list = None
@@ -135,7 +142,7 @@ class CommandController:
         self.timing_stats = {}  # Store total time for each function {function_name: total_time}
         self.timing_lock = threading.Lock()  # For thread-safe timing statistics
         # ros
-        if publish_ros:
+        if publish_ros and rclpy is not None:
             rclpy.init()
 
     def _timing_context(self, function_name: str):

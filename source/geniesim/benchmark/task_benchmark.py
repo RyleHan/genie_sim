@@ -139,6 +139,11 @@ class TaskBenchmark(object):
                 time.sleep(3)
                 self.api_core.collect_init_physics()
 
+                # EmbodiedClaw agent loop mode: event-driven, triggered by HTTP /run_skill
+                if self.api_core.skill_executor is not None:
+                    self._agent_loop_mode()
+                    return
+
                 self.evaluate_summary = EvaluationSummary(
                     os.path.join(system_utils.benchmark_output_path()), task, sub_task_name
                 )
@@ -154,9 +159,25 @@ class TaskBenchmark(object):
 
                 for episode_id in range(self.args.num_episode * len(self.env.task.instructions)):
                     self.env.set_current_task(episode_id)
-                    if self.instruction != "":
+
+                    # ---- New: terminal interactive mode ---- #
+                    user_override_instruction = None
+                    if getattr(self.args, 'terminal_interactive', False):
+                        scene_info = self.env.task.get_instruction()
+                        print(f"\n[Scene {instance_id}] Default instruction: {scene_info[0]}")
+                        user_input = input(">>> Enter your instruction (Enter=use default, q=quit): ").strip()
+                        if user_input.lower() == 'q':
+                            break
+                        if user_input:
+                            user_override_instruction = user_input
+                    # ----------------------------------------
+
+
+                    elif self.instruction != "":
                         self.env.task.set_instruction(self.instruction)
                     current_instruction = self.env.task.get_instruction()
+                    if user_override_instruction:
+                        current_instruction = [user_override_instruction] + list(current_instruction[1:])
 
                     single_te = TaskEvaluation(task_name=self.task_name, sub_task_name=sub_task_name)
                     single_te.update_from_dict(
@@ -177,7 +198,7 @@ class TaskBenchmark(object):
                     )
                     self.data_courier.pub_dynamic_info_msg(self.evaluate_summary.to_dynamic_msg_pub())
                     # one episode
-                    self.evaluate_episode(robot_cfg, single_te)
+                    self.evaluate_episode(robot_cfg, single_te, user_override_instruction)
                     episode += 1
                     self.evaluate_summary.make_cache()
 
@@ -280,6 +301,40 @@ class TaskBenchmark(object):
         self.env.set_data_courier(self.data_courier)
         self.env.set_scene_info(scene_info)
 
+    def _agent_loop_mode(self):
+        """EmbodiedClaw agent loop 模式：无限等待 HTTP /run_skill 请求，执行一次 VLA，上报结果。"""
+        executor = self.api_core.skill_executor
+        logger.info("[AgentLoopMode] 就绪，等待技能请求...")
+        try:
+            while True:
+                instruction = executor.wait_for_start()
+                logger.info(f"[AgentLoopMode] 执行技能: {instruction!r}")
+                try:
+                    observation = self.env.reset()
+                    self.policy.reset()
+                    self.env.current_step = 0
+                    any_progress = False
+                    while self.data_courier.loop_ok():
+                        action = self.policy.act(
+                            observation,
+                            step_num=self.env.current_step,
+                            task_instruction=instruction,
+                        )
+                        observation, done, need_update, task_progress = self.env.step(action)
+                        logger.info(f"[AgentLoopMode] step={self.env.current_step} done={done}")
+                        if need_update and task_progress:
+                            any_progress = True
+                        if done:
+                            break
+                    success = any_progress
+                except Exception as e:
+                    logger.error(f"[AgentLoopMode] 执行出错: {e}")
+                    success = False
+                executor.complete(success)
+                logger.info(f"[AgentLoopMode] 技能完成: {'成功' if success else '失败'}")
+        except KeyboardInterrupt:
+            logger.info("[AgentLoopMode] 收到中断，退出")
+
     def set_record_topics(self):
         if "G1" in self.task_config["robot"]["robot_cfg"]:
             self.record_topic_list = [
@@ -304,9 +359,21 @@ class TaskBenchmark(object):
         else:
             raise ValueError("Invalid robot cfg")
 
-    def evaluate_episode(self, robot_cfg, single_te: TaskEvaluation):
+    def evaluate_episode(self, robot_cfg, single_te: TaskEvaluation, override_instruction=None):
         # Create agent to be evaluated
         observaion = self.env.reset()  # 1st frame
+
+        # ─── 保存初始帧图像 ───
+        import cv2, os
+        images = self.api_core.get_observation_image({})
+        os.makedirs("output/cameras", exist_ok=True)
+        ep = getattr(self.env, "current_episode", 0)
+        for cam_id, img in images.items():
+            cv2.imwrite(f"output/cameras/ep{ep}_{cam_id}.jpg",
+                        cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+
+
+
         start_time = time.time()
         (
             start_callbacks,
@@ -337,6 +404,8 @@ class TaskBenchmark(object):
                         single_instruction = [self.data_courier.get_instruction()]
                     else:
                         single_instruction = self.env.task.get_instruction()
+                        if override_instruction:
+                            single_instruction = [override_instruction] + list(single_instruction[1:])
                     action = self.policy.act(
                         observaion,
                         step_num=self.env.current_step,

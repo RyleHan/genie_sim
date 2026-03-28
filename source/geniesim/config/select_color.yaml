@@ -4,7 +4,7 @@ app:
   rendering_step: 60
   enable_curobo: false
   reset_fallen: false
-  enable_ros: true
+  enable_ros: false
   record_img: false
   record_video: false
   render_mode: "RaytracedLighting"
@@ -13,16 +13,18 @@ app:
   enable_gpu_dynamics: false
   enable_rate_limit: true
   enable_playback: false
+  enable_embodied_http: true
 benchmark:
   client_host: "localhost:50051"
+  terminal_interactive: False
   num_episode: 1
   task_name: "table_task_g1"
   sub_task_name: "pick_block_color"
   output_dir: "output"
   fps: 30
   record: true
-  infer_host: "localhost"
-  infer_port: 8999
-  model_arc: "pi"
-  enable_ros: true
+  infer_host: "192.168.110.100"
+  infer_port: 8000
+  model_arc: ""
+  enable_ros: false
   interactive: false

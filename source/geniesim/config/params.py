@@ -109,6 +109,7 @@ class AppConfig:
     enable_gpu_dynamics: bool = False
     enable_rate_limit: bool = False
     enable_playback: bool = False
+    enable_embodied_http: bool = False
 
 
 @dataclass
@@ -126,6 +127,7 @@ class BenchmarkConfig:
     model_arc: str = "pi"
     enable_ros: bool = False
     interactive: bool = False
+    terminal_interactive: bool = False
 
 
 @dataclass

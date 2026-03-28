@@ -244,10 +244,10 @@
                 ]
             }
         },
-        "scene_id": "background/home_b/",
-        "scene_info_dir": "background/home_b/",
+        "scene_id": "scenes/room/",
+        "scene_info_dir": "scenes/room/",
         "scene_usd": [
-            "background/home_b/home_b_00.usda"
+            "scenes/room/room_00.usda"
         ]
     },
     "stages": [

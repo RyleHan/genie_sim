@@ -2,42 +2,53 @@
 # Author: Genie Sim Team
 # License: Mozilla Public License Version 2.0
 
-from rclpy.qos import (
-    QoSProfile,
-    QoSHistoryPolicy,
-    QoSReliabilityPolicy,
-    QoSDurabilityPolicy,
-)
-from rclpy.node import Node
-from rclpy.parameter import Parameter
+try:
+    from rclpy.qos import (
+        QoSProfile,
+        QoSHistoryPolicy,
+        QoSReliabilityPolicy,
+        QoSDurabilityPolicy,
+    )
+    from rclpy.node import Node
+    from rclpy.parameter import Parameter
 
-from builtin_interfaces.msg import Time
-from sensor_msgs.msg import Image, CompressedImage
-from sensor_msgs.msg import JointState
-from std_msgs.msg import Bool
-from tf2_msgs.msg import TFMessage
+    from builtin_interfaces.msg import Time
+    from sensor_msgs.msg import Image, CompressedImage
+    from sensor_msgs.msg import JointState
+    from std_msgs.msg import Bool
+    from tf2_msgs.msg import TFMessage
+    from cv_bridge import CvBridge
+except (ModuleNotFoundError, ImportError):
+    QoSProfile = QoSHistoryPolicy = QoSReliabilityPolicy = QoSDurabilityPolicy = None
+    Node = object
+    Parameter = None
+    Time = Image = CompressedImage = JointState = Bool = TFMessage = None
+    CvBridge = None
 
 from collections import deque
 import threading
 from geniesim.utils.name_utils import *
-from cv_bridge import CvBridge
 
 import numpy as np
 import time
 
-QOS_PROFILE_LATEST = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=1,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
-)
+if QoSProfile is not None:
+    QOS_PROFILE_LATEST = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=1,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
+    )
 
-QOS_PROFILE_VOLATILE = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=1,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.VOLATILE,
-)
+    QOS_PROFILE_VOLATILE = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=1,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.VOLATILE,
+    )
+else:
+    QOS_PROFILE_LATEST = None
+    QOS_PROFILE_VOLATILE = None
 
 
 def image_to_numpy(img_msg):

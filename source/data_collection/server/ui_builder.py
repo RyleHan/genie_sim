@@ -37,7 +37,10 @@ from common.base_utils.logger import logger
 from common.base_utils.transform_utils import mat2quat_wxyz
 from server.controllers.kinematics_solver import KinematicsSolver
 from server.controllers.ruckig_move import RuckigController
-from server.motion_generator.motion_gen_reacher import CuroboMotion
+try:
+    from server.motion_generator.motion_gen_reacher import CuroboMotion
+except (ImportError, ModuleNotFoundError):
+    CuroboMotion = None
 
 
 class UIBuilder:

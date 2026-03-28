@@ -3,7 +3,7 @@
 # License: Mozilla Public License Version 2.0
 
 import os
-from typing import Tuple
+from typing import Any, Optional, Tuple
 import numpy as np
 import threading
 import queue
@@ -13,7 +13,10 @@ import asyncio
 import subprocess
 import signal
 from pxr import Usd, UsdGeom, UsdShade, Sdf, Gf, UsdPhysics, PhysxSchema
-import rclpy
+try:
+    import rclpy
+except (ModuleNotFoundError, ImportError):
+    rclpy = None
 
 import omni
 import omni.usd
@@ -45,7 +48,10 @@ from geniesim.app.utils.utils import (
 )
 from geniesim.utils import system_utils
 from geniesim.utils.usd_utils import *
-from geniesim.utils.ros_nodes.server_node import *
+try:
+    from geniesim.utils.ros_nodes.server_node import *
+except (ModuleNotFoundError, ImportError):
+    pass
 from geniesim.config.params import Config
 from geniesim.app.ros_publisher.base import USDBase
 from geniesim.app.ros_publisher.robot_interface import RobotInterface
@@ -54,9 +60,10 @@ from geniesim.app.workflow.ui_builder import UIBuilder
 
 class APICore:
     def __init__(self, ui_builder: UIBuilder, config: Config):
-        context = rclpy.get_default_context()
-        if not context.ok():
-            rclpy.init()
+        if rclpy is not None:
+            context = rclpy.get_default_context()
+            if not context.ok():
+                rclpy.init()
 
         self.task_queue_on_render_loop = queue.Queue()
         self.task_queue_on_physics_loop = queue.Queue()
@@ -101,6 +108,9 @@ class APICore:
         self._current_mode = "realtime"
         self._stage = omni.usd.get_context().get_stage()
 
+        # EmbodiedClaw agent loop (set by app.py when enable_embodied_http=true)
+        self.skill_executor = None
+
         # app config
         self.enable_physics = not config.app.disable_physics
         self.enable_curobo = config.app.enable_curobo
@@ -138,7 +148,7 @@ class APICore:
         self.index = 0
 
         # robot ros
-        if not rclpy.get_default_context().ok():
+        if rclpy is not None and not rclpy.get_default_context().ok():
             rclpy.init()
 
     def run_on_render_loop(self, func, *args, **kwargs):

@@ -10,17 +10,25 @@ from typing import Optional
 import carb
 import numpy as np
 import torch
-from curobo.cuda_robot_model.cuda_robot_model import CudaRobotModel, CudaRobotModelConfig
-from curobo.geom.sdf.world import CollisionCheckerType
-from curobo.geom.sphere_fit import SphereFitType
-from curobo.geom.types import WorldConfig
-from curobo.types.base import TensorDeviceType
-from curobo.types.math import Pose
-from curobo.types.robot import RobotConfig
-from curobo.types.state import JointState
-from curobo.util.usd_helper import UsdHelper, get_prim_world_pose
-from curobo.util_file import get_robot_configs_path, join_path, load_yaml
-from curobo.wrap.reacher.motion_gen import MotionGen, MotionGenPlanConfig, PoseCostMetric
+try:
+    from curobo.cuda_robot_model.cuda_robot_model import CudaRobotModel, CudaRobotModelConfig
+    from curobo.geom.sdf.world import CollisionCheckerType
+    from curobo.geom.sphere_fit import SphereFitType
+    from curobo.geom.types import WorldConfig
+    from curobo.types.base import TensorDeviceType
+    from curobo.types.math import Pose
+    from curobo.types.robot import RobotConfig
+    from curobo.types.state import JointState
+    from curobo.util.usd_helper import UsdHelper, get_prim_world_pose
+    from curobo.util_file import get_robot_configs_path, join_path, load_yaml
+    from curobo.wrap.reacher.motion_gen import MotionGen, MotionGenPlanConfig, PoseCostMetric
+except (ImportError, ModuleNotFoundError):
+    CudaRobotModel = CudaRobotModelConfig = None
+    CollisionCheckerType = SphereFitType = WorldConfig = None
+    TensorDeviceType = Pose = RobotConfig = JointState = None
+    UsdHelper = get_prim_world_pose = None
+    get_robot_configs_path = join_path = load_yaml = None
+    MotionGen = MotionGenPlanConfig = PoseCostMetric = None
 from isaacsim.core.api import World
 from isaacsim.core.api.objects import sphere
 from isaacsim.core.prims import SingleArticulation as Articulation
@@ -43,7 +51,7 @@ except ImportError:
     pass
 
 
-CUROBO_BATCH_SIZE = 20
+CUROBO_BATCH_SIZE = 4  # reduced from 20 for SM_120/Blackwell GPU compatibility
 MAX_MESH_FACES = 1000  # Maximum face count limit
 
 
@@ -378,11 +386,11 @@ class CuroboMotion:
             world_model=self.world_cfg,
             tensor_args=tensor_args,
             collision_checker_type=CollisionCheckerType.MESH,
-            use_cuda_graph=True,
+            use_cuda_graph=False,  # disabled for SM_120/Blackwell compatibility
             num_trajopt_seeds=4,
             num_graph_seeds=4,
-            num_ik_seeds=32,
-            num_batch_ik_seeds=32,
+            num_ik_seeds=8,
+            num_batch_ik_seeds=4,
             interpolation_dt=0.01,
             interpolation_steps=5000,
             collision_cache={"obb": n_obstacle_cuboids, "mesh": n_obstacle_mesh},

@@ -577,7 +577,7 @@ robot_cfg:
         }
     }
     lock_joints: {
-        'idx01_body_joint1': 0.3, 'idx02_body_joint2': 0.52359877,
+        'idx01_body_joint1': 0.42, 'idx02_body_joint2': 0.87,
         "idx72_gripper_r_inner_joint3": 0.0, "idx73_gripper_r_inner_joint4": 0.349,
         "idx81_gripper_r_outer_joint1": 0.95, "idx82_gripper_r_outer_joint3": 0.01,
         "idx83_gripper_r_outer_joint4": -0.35,
@@ -606,7 +606,7 @@ robot_cfg:
         'idx72_gripper_r_inner_joint3', 'idx73_gripper_r_inner_joint4',
         'idx81_gripper_r_outer_joint1', 'idx82_gripper_r_outer_joint3', 'idx83_gripper_r_outer_joint4'
        ]
-      retract_config: [0.3, 0.52359877,
+      retract_config: [0.42, 0.87,
         2.07, -0.61, -1.57, 1, -1.57, -1.57, 1.57,
         0.0, 0.01,
         0.5, 0.0, -0.02,

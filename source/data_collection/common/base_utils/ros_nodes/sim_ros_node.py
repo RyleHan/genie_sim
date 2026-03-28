@@ -6,12 +6,21 @@ import os
 import sys
 
 import numpy as np
-from cv_bridge import CvBridge
-from rclpy.node import Node
-from rclpy.parameter import Parameter
-from rclpy.qos import QoSDurabilityPolicy, QoSHistoryPolicy, QoSProfile, QoSReliabilityPolicy
-from sensor_msgs.msg import Image, JointState
-from std_msgs.msg import Header
+try:
+    from cv_bridge import CvBridge
+    from rclpy.node import Node
+    from rclpy.parameter import Parameter
+    from rclpy.qos import QoSDurabilityPolicy, QoSHistoryPolicy, QoSProfile, QoSReliabilityPolicy
+    from sensor_msgs.msg import Image, JointState
+    from std_msgs.msg import Header
+    _ROS_AVAILABLE = True
+except (ImportError, ModuleNotFoundError):
+    CvBridge = None
+    Node = object
+    Parameter = None
+    QoSDurabilityPolicy = QoSHistoryPolicy = QoSProfile = QoSReliabilityPolicy = None
+    Image = JointState = Header = None
+    _ROS_AVAILABLE = False
 
 from common.base_utils.logger import logger
 
@@ -20,19 +29,22 @@ UTIL_DIR = os.path.join(str(ROOT_DIR), "base_utils")
 sys.path.append(UTIL_DIR)
 logger.info(f"UTIL_DIR: {UTIL_DIR}")
 
-QOS_PROFILE_LATEST = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=30,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
-)
-
-QOS_PROFILE_VOLATILE = QoSProfile(
-    history=QoSHistoryPolicy.KEEP_LAST,
-    depth=30,
-    reliability=QoSReliabilityPolicy.RELIABLE,
-    durability=QoSDurabilityPolicy.VOLATILE,
-)
+if _ROS_AVAILABLE:
+    QOS_PROFILE_LATEST = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=30,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
+    )
+    QOS_PROFILE_VOLATILE = QoSProfile(
+        history=QoSHistoryPolicy.KEEP_LAST,
+        depth=30,
+        reliability=QoSReliabilityPolicy.RELIABLE,
+        durability=QoSDurabilityPolicy.VOLATILE,
+    )
+else:
+    QOS_PROFILE_LATEST = None
+    QOS_PROFILE_VOLATILE = None
 
 
 class SimPubRosNode(Node):

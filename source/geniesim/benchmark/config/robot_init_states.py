@@ -121,6 +121,10 @@ TASK_INFO_DICT = {
         "G1_omnipicker": G1_DEFAULT_STATES,
         "G2_omnipicker": G2_DEFAULT_STATES,
     },
+    "pick_block_color_cn": {
+        "G1_omnipicker": G1_DEFAULT_STATES,
+        "G2_omnipicker": G2_DEFAULT_STATES,
+    },
     "pick_block_shape": {
         "G1_omnipicker": G1_DEFAULT_STATES,
         "G2_omnipicker": G2_DEFAULT_STATES,
@@ -208,6 +212,9 @@ TASK_INFO_DICT = {
     "sort_fruit": {
         "G1_omnipicker": G1_DEFAULT_STATES,
         "G2_omnipicker": G2_DEFAULT_STATES,
+    },
+    "chem_waste_sorting": {
+        "G1_omnipicker": G1_DEFAULT_STATES,
     },
     "place_book": {"G2_omnipicker": G2_STATES_1},
     "place_book_hard": {"G2_omnipicker": G2_STATES_1},
